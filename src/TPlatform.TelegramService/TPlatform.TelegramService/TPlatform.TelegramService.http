@@ -1,0 +1,7 @@
+﻿@TPlatform.TelegramService_HostAddress = http://localhost:5012
+
+GET {{TPlatform.TelegramService_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+

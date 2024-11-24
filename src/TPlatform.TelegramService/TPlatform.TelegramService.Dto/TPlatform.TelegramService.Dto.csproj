@@ -6,4 +6,16 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="DbConfigurations\" />
+    <None Remove="Telegram\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DbConfigurations\" />
+    <Folder Include="Telegram\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
 </Project>

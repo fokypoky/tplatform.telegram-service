@@ -17,47 +17,17 @@ namespace TPlatform.TelegramService.Api.Controllers
             _notificationService = notificationService;
         }
 
-        [HttpPost("info")]
-        public async Task<IActionResult> NotifyInfo([FromBody] NotificationRequest request)
+        [HttpPost]
+        public async Task<IActionResult> Notify([FromBody] NotificationRequest request)
         {
-            var result = await _notificationService.NotifyAsync(GetNotificationMessage(request, "info"));
+            var result = await _notificationService.NotifyAsync(GetNotificationMessage(request));
             return MapResponse(result);
         }
 
-        [HttpPost("warning")]
-        public async Task<IActionResult> NotifyWarning([FromBody] NotificationRequest request)
+        private string GetNotificationMessage(NotificationRequest request)
         {
-            var result = await _notificationService.NotifyAsync(GetNotificationMessage(request, "warning"));
-            return MapResponse(result);
-        }
+            var builder = new StringBuilder($"#{request.TargetSystem.Replace(" ", "_")} ");
 
-        [HttpPost("error")]
-        public async Task<IActionResult> NotifyError([FromBody] NotificationRequest request)
-        {
-            var result = await _notificationService.NotifyAsync(GetNotificationMessage(request, "error"));
-            return MapResponse(result);
-        }
-
-        private IActionResult MapResponse<T>(ServiceResult<T> result)
-        {
-            return result.ResultType == ServiceResultType.Ok
-                ? Ok()
-                : StatusCode((int)result.ResultType, JsonConvert.SerializeObject(result.ErrorMessage));
-        }
-        
-        private string GetNotificationMessage(NotificationRequest request, string logType)
-        {
-            if (!request.Tags.Contains(logType, StringComparer.OrdinalIgnoreCase))
-            {
-                request.Tags.Insert(0, logType);
-            }
-            
-            var builder = new StringBuilder();
-            if (request.TargetSystem != null)
-            {
-                builder.Append($"#{request.TargetSystem} ");
-            }
-            
             request.Tags.ForEach(tag =>
             {
                 builder.Append($"#{tag} ");
@@ -67,6 +37,12 @@ namespace TPlatform.TelegramService.Api.Controllers
 
             return builder.ToString();
         }
+
+        private IActionResult MapResponse<T>(ServiceResult<T> result)
+        {
+            return result.ResultType == ServiceResultType.Ok
+                ? Ok()
+                : StatusCode((int)result.ResultType, JsonConvert.SerializeObject(result.ErrorMessage));
+        }
     }
 }
-

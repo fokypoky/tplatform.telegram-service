@@ -16,6 +16,7 @@ builder.Services.AddScoped<IApplicationContext, ApplicationContext>(_ => new App
     database: builder.Configuration.GetValue<string>("DB_NAME")!
 ));
 builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 builder.Services.AddSingleton<ITelegramAdapter, TelegramAdapter>(_ => new TelegramAdapter(builder.Configuration.GetValue<string>("TELEGRAM_BOT_KEY")!));
 var app = builder.Build();
 

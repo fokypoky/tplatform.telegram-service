@@ -2,7 +2,6 @@
 using TPlatform.TelegramService.Dto;
 using TPlatform.TelegramService.Services.Adapters;
 using TPlatform.TelegramService.Services.Interfaces;
-using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 namespace TPlatform.TelegramService.Services.Implementation
 {

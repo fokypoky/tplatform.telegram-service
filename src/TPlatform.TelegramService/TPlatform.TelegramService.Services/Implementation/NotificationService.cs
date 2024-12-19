@@ -18,7 +18,6 @@ namespace TPlatform.TelegramService.Services.Implementation
 
 		public async Task<ServiceResult<bool>> NotifyAsync(string message, long? chatId)
 		{
-			//var channels = await  _applicationContext.AllowedChannels.ToListAsync();
 			List<AllowedChannel> channels;
 
 			if (chatId != null)

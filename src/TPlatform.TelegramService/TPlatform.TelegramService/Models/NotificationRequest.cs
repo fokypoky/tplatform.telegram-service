@@ -5,5 +5,6 @@
 		public List<string> Tags { get; set; }
 		public string TargetSystem { get; set; }
 		public string Message { get; set; }
+		public long? ChatId { get; set; }
 	}
 }

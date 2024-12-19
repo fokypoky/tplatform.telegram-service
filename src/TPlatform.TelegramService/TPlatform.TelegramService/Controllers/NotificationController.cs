@@ -20,7 +20,11 @@ namespace TPlatform.TelegramService.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Notify([FromBody] NotificationRequest request)
         {
-            var result = await _notificationService.NotifyAsync(GetNotificationMessage(request));
+            var result = await _notificationService.NotifyAsync(
+                GetNotificationMessage(request),
+                request.ChatId
+            );
+
             return MapResponse(result);
         }
 

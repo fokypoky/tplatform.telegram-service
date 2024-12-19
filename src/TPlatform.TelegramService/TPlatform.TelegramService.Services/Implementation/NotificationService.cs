@@ -16,10 +16,22 @@ namespace TPlatform.TelegramService.Services.Implementation
 			_telegramAdapter = telegramAdapter;
 		}
 
-		public async Task<ServiceResult<bool>> NotifyAsync(string message)
+		public async Task<ServiceResult<bool>> NotifyAsync(string message, long? chatId)
 		{
-			var channels = await  _applicationContext.AllowedChannels.ToListAsync();
-			
+			List<AllowedChannel> channels;
+
+			if (chatId != null)
+			{
+				channels = new List<AllowedChannel>()
+				{
+					new AllowedChannel() { Id = 0, ChannelId = chatId.Value }
+				};
+			}
+			else
+			{
+				channels = await _applicationContext.AllowedChannels.ToListAsync();
+			}
+
 			foreach (var channel in channels)
 			{
 				var response = await _telegramAdapter.SendMessageAsync(message, channel.ChannelId);
